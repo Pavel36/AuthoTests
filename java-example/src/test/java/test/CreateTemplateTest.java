@@ -73,7 +73,7 @@ public class CreateTemplateTest {
     driver.findElement(By.cssSelector("textarea[placeholder='Описание']")).sendKeys(templateProps.getProperty("description"));
 
     //Тип
-    driver.findElement(By.xpath("//*[contains(text(), "+templateProps.getProperty("type")+")]/../..")).click();
+    driver.findElement(By.xpath("//*[contains(@class, 'mat-radio-group')]/mat-radio-button["+templateProps.getProperty("type")+"]")).click();
 
     //Самооценка
     if(templateProps.getProperty("withSelfRating")!=null)

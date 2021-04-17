@@ -46,7 +46,7 @@ public class CreateTemplatePage {
 
     public CreateTemplatePage enterType(Integer type)
     {
-        driver.findElement(By.xpath("//*[contains(text(), "+type+")]/../..")).click();
+        driver.findElement(By.xpath("//*[contains(@class, 'mat-radio-group')]/mat-radio-button["+type+"]")).click();
         return this;
     }
 
