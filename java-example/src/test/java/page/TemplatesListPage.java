@@ -19,6 +19,9 @@ public class TemplatesListPage {
     private By btnAdd = By.xpath("//*[contains(text(), 'note_add')]");
     private By table = By.tagName("mat-table");
     private By row = By.tagName("mat-row");
+    private By select = By.cssSelector("mat-select");
+    private By selectItemsPerPage = By.xpath("//*[contains(@class, 'mat-select-content ')]/mat-option[4]");
+
 
     public TemplatesListPage(WebDriver driver) {
         this.driver = driver;
@@ -37,10 +40,10 @@ public class TemplatesListPage {
         driver.findElement(inputSearch).sendKeys(surveyName);
         driver.findElement(btnSearch).click();
         driver.manage().timeouts().implicitlyWait(5000, TimeUnit.MILLISECONDS);
-        driver.findElement(By.cssSelector("mat-select")).click();
+        driver.findElement(select).click();
         new WebDriverWait(driver, 10).until(
                 ExpectedConditions.visibilityOfElementLocated(By.tagName("mat-option")));
-        driver.findElement(By.xpath("//*[contains(@class, 'mat-select-content ')]/mat-option[4]")).click();
+        driver.findElement(selectItemsPerPage).click();
         driver.manage().timeouts().implicitlyWait(5000, TimeUnit.MILLISECONDS);
         List<WebElement> list1 = driver.findElement(table).findElements(row);
         int count1 = list1.size();
