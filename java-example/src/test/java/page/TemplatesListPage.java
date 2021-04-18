@@ -34,12 +34,16 @@ public class TemplatesListPage {
         return new CreateTemplatePage(driver);
     }
 
-    public int countTemplates(String surveyName) {
+    public void searchTemplates(String surveyName){
         new WebDriverWait(driver, 10).until(
                 ExpectedConditions.visibilityOfElementLocated(inputSearch));
         driver.findElement(inputSearch).sendKeys(surveyName);
         driver.findElement(btnSearch).click();
         driver.manage().timeouts().implicitlyWait(5000, TimeUnit.MILLISECONDS);
+    }
+
+    public int countTemplates(String surveyName) {
+        searchTemplates(surveyName);
         driver.findElement(select).click();
         new WebDriverWait(driver, 10).until(
                 ExpectedConditions.visibilityOfElementLocated(By.tagName("mat-option")));
