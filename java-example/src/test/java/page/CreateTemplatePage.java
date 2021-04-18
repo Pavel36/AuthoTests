@@ -154,4 +154,5 @@ public class CreateTemplatePage {
         return new TemplatesListPage(driver);
     }
 
+
 }
