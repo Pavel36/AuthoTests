@@ -16,6 +16,7 @@ import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
 import java.util.Properties;
 import java.util.concurrent.TimeUnit;
 
@@ -60,6 +61,23 @@ public class CreateTemplateTest {
 
     //Клик по элементу меню "Шаблоны опросов"
     driver.findElement(By.xpath("//*[contains(text(), 'Шаблоны опросов')]")).click();
+
+    //Проверка, что шаблон создан
+    new WebDriverWait(driver, 10).until(
+            ExpectedConditions.elementToBeClickable(By.cssSelector("input[placeholder='Поиск по названию']")));
+
+    //Ищем по названию шаблона
+    driver.findElement(By.cssSelector("input[placeholder='Поиск по названию']")).sendKeys(templateProps.getProperty("surveyName"));
+    driver.findElement(By.xpath("//*[contains(@class, 'search-header')]/button[1]")).click();
+    driver.manage().timeouts().implicitlyWait(5000, TimeUnit.MILLISECONDS);
+
+    //Если таблица содержит хотя бы одну строку с таким названием, тест выполнен
+    driver.findElement(By.cssSelector("mat-select")).click();
+    new WebDriverWait(driver, 10).until(
+            ExpectedConditions.visibilityOfElementLocated(By.tagName("mat-option")));
+    driver.findElement(By.xpath("//*[contains(@class, 'mat-select-content ')]/mat-option[4]")).click();
+    List<WebElement> list = driver.findElement(By.tagName("mat-table")).findElements(By.tagName("mat-row"));
+    int count = list.size();
 
     //Клик по кнопке создания опроса
     new WebDriverWait(driver, 10).until(
@@ -200,8 +218,13 @@ public class CreateTemplateTest {
     driver.manage().timeouts().implicitlyWait(5000, TimeUnit.MILLISECONDS);
 
     //Если таблица содержит хотя бы одну строку с таким названием, тест выполнен
-    Assert.assertEquals(driver.findElement(By.xpath("//*[contains(text(), '"+templateProps.getProperty("surveyName")+"') " +
-            "and @class = 'mat-list-item-content']")).getText(),templateProps.getProperty("surveyName"));
+    driver.findElement(By.cssSelector("mat-select")).click();
+    new WebDriverWait(driver, 10).until(
+            ExpectedConditions.visibilityOfElementLocated(By.tagName("mat-option")));
+    driver.findElement(By.xpath("//*[contains(@class, 'mat-select-content ')]/mat-option[4]")).click();
+    List<WebElement> list1 = driver.findElement(By.tagName("mat-table")).findElements(By.tagName("mat-row"));
+    int count1 = list1.size();
+    Assert.assertEquals(count+1,count1);
   }
 
   @After

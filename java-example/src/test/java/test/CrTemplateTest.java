@@ -35,8 +35,8 @@ public class CrTemplateTest {
         createTemplateStep = new CreateTemplateStep(driver);
         createTemplateStep.setTemplatePage(new FromMainToCreateStep().switchPages(mainPage));
         TemplatesListPage templatesListPageFin = createTemplateStep.enterTemplateFields("DELDEL",
-                1,true,1,"Hahahha", "14 апреля 2021 г.",
-                "14 апреля 2021 г.", 5, 'W', 2,3,4,2, "Is it you?");
+                1,true,1,"Hahahha", "20 апреля 2021 г.",
+                "20 апреля 2021 г.", 5, 'W', 2,3,4,2, "Is it you?");
         driver.manage().timeouts().implicitlyWait(5000, TimeUnit.MILLISECONDS);
         templatesListPageFin.checkTemplateCreated("DELDEL");
 
